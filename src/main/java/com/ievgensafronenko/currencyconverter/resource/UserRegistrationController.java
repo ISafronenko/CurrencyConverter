@@ -3,7 +3,10 @@ package com.ievgensafronenko.currencyconverter.resource;
 import com.ievgensafronenko.currencyconverter.model.User;
 import com.ievgensafronenko.currencyconverter.model.UserRegistrationDto;
 import com.ievgensafronenko.currencyconverter.service.UserService;
-import io.swagger.models.Model;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/registration")
+@Api(value = "User registration resource", description = "This is API for user registration.")
 public class UserRegistrationController {
 
     @Autowired
@@ -29,11 +33,25 @@ public class UserRegistrationController {
         return new UserRegistrationDto();
     }
 
+    @ApiOperation(value = "Endpoint for returning user registration form.")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 400, message = "Invalid request format"),
+                    @ApiResponse(code = 500, message = "Temporary technical server error")
+            }
+    )
     @GetMapping
     public String showRegistrationForm() {
         return "registration";
     }
 
+    @ApiOperation(value = "Endpoint for registering user.")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 400, message = "Invalid request format"),
+                    @ApiResponse(code = 500, message = "Temporary technical server error")
+            }
+    )
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
                                       BindingResult result) {
