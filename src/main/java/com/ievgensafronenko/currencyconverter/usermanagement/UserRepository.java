@@ -1,6 +1,6 @@
-package com.ievgensafronenko.currencyconverter.repository;
+package com.ievgensafronenko.currencyconverter.usermanagement;
 
-import com.ievgensafronenko.currencyconverter.model.User;
+import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

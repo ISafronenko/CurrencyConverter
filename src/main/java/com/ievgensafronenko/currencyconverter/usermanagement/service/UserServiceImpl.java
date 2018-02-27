@@ -1,9 +1,9 @@
-package com.ievgensafronenko.currencyconverter.service;
+package com.ievgensafronenko.currencyconverter.usermanagement.service;
 
-import com.ievgensafronenko.currencyconverter.model.Role;
-import com.ievgensafronenko.currencyconverter.model.User;
-import com.ievgensafronenko.currencyconverter.model.UserRegistrationDto;
-import com.ievgensafronenko.currencyconverter.repository.UserRepository;
+import com.ievgensafronenko.currencyconverter.usermanagement.UserRepository;
+import com.ievgensafronenko.currencyconverter.usermanagement.model.Role;
+import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
+import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         return userRepository.save(user);
     }
 

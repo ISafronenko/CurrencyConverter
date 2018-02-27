@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.config;
 
-import com.ievgensafronenko.currencyconverter.service.UserService;
+import com.ievgensafronenko.currencyconverter.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

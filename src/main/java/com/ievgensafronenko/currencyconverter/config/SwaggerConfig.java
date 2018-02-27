@@ -22,7 +22,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ievgensafronenko.currencyconverter"))
-                .paths(regex("/registration.*"))
+                .paths(regex("/.*"))
                 .build()
                 .apiInfo(metaInfo());
     }
@@ -37,7 +37,7 @@ public class SwaggerConfig {
                 new Contact("Ievgen Safronenko", "https://www.linkedin.com/in/ievgen-safronenko-0ba21144/",
                         "ievgen.safronenko@gmail.com"),
                 "Apache License Version 2.0",
-                "https://www.apache.org/licesen.html"
+                "https://www.apache.org/licenses/"
         );
         return apiInfo;
     }

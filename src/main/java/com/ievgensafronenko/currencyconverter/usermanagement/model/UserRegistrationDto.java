@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.model;
+package com.ievgensafronenko.currencyconverter.usermanagement.model;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;

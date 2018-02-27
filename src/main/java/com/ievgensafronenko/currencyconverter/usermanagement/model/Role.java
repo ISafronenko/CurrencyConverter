@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.model;
+package com.ievgensafronenko.currencyconverter.usermanagement.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
