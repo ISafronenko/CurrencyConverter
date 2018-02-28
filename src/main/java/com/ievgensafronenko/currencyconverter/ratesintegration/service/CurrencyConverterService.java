@@ -1,10 +1,9 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertingResultDTO;
+import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.HistoryData;
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.UserService;
-import com.ievgensafronenko.currencyconverter.usermanagement.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +31,16 @@ public class CurrencyConverterService {
      * @param currencyFrom - currency code from which converting.
      * @param amount       - amount.
      * @param currencyTo   - currency code to which converting.
-     * @return ConvertingResultDTO object.
+     * @return ConvertDTO object.
      */
-    public ConvertingResultDTO convert(String currencyFrom, Double amount, String currencyTo) {
+    public Double convert(ConvertDTO convertDTO) {
         Rate rates = rateService.getRates();
 
         Map<String, Double> ratesMap = rates.getRates();
+
+        String currencyFrom = convertDTO.getCurrencyFrom();
+        String currencyTo = convertDTO.getCurrencyTo();
+        Double amount = convertDTO.getAmount();
 
         Double rateFrom = ratesMap.get(currencyFrom);
         Double rateTo = ratesMap.get(currencyTo);
@@ -46,6 +49,6 @@ public class CurrencyConverterService {
         //TODO needs to be refactored.
         historyService.save(new HistoryData("", currencyFrom, currencyTo, amount, result, new Date()));
 
-        return new ConvertingResultDTO(currencyFrom, currencyTo, amount, result);
+        return result;
     }
 }

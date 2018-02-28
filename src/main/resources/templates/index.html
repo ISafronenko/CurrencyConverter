@@ -11,8 +11,98 @@
     <title>Registration</title>
 </head>
 <body>
+
 <div class="container">
+
     <h1>Welcome to Currency Converter</h1>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form th:action="@{/convert}" th:object="${convert}" method="post">
+
+                <p class="error-message"
+                   th:if="${#fields.hasGlobalErrors()}"
+                   th:each="error : ${#fields.errors('global')}"
+                   th:text="${error}">Validation error</p>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('currencyFrom')}? 'has-error':''">
+                    <label for="currencyFrom" class="control-label">Currency From</label>
+                    <select id="currencyFrom"
+                            class="form-control"
+                            th:field="*{currencyFrom}">
+                        <option th:each="currency : ${currencies}"
+                                th:value="${currency}" th:text="${currency}"></option>
+                    </select>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('currencyFrom')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('amount')}? 'has-error':''">
+                    <label for="amount" class="control-label">Amount</label>
+                    <input id="amount"
+                           class="form-control"
+                           th:field="*{amount}"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('amount')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('currencyTo')}? 'has-error':''">
+                    <label for="currencyTo" class="control-label">Currency To</label>
+                    <select id="currencyTo"
+                            class="form-control"
+                            th:field="*{currencyTo}">
+                        <option th:each="currency : ${currencies}"
+                                th:value="${currency}" th:text="${currency}"></option>
+                    </select>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('currencyTo')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('date')}? 'has-error':''">
+                    <label for="date" class="control-label">Date</label>
+                    <input type="date" id="dob"
+                           class="form-control"
+                           th:field="*{date}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('date')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div th:if="${convertResult} != null">
+                    <p th:text="${convertResult}">Result!</p>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Convert</button>
+                </div>
+            </form>
+
+            <table>
+                <tr>
+                    <th>Currency From</th>
+                    <th>Currency To</th>
+                    <th>Amount</th>
+                    <th>Result</th>
+                    <th>Date</th>
+                </tr>
+                <tr th:each="histData : ${histDatas}">
+                    <td th:text="${histData.currencyFrom}">From</td>
+                    <td th:text="${histData.currencyTo}">To</td>
+                    <td th:text="${histData.amount}">0.00</td>
+                    <td th:text="${histData.result}">0.00</td>
+                    <td th:text="${histData.date}"></td>
+
+                </tr>
+            </table>
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>

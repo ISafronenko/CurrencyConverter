@@ -1,20 +1,34 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 /**
  * Class represent results of currency converting.
  */
-public class ConvertingResultDTO {
+public class ConvertDTO {
 
+    @NotEmpty
     private String currencyFrom;
+    @NotEmpty
     private String currencyTo;
+    @NotNull
     private Double amount;
-    private Double result;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date date;
 
-    public ConvertingResultDTO(String currencyFrom, String currencyTo, Double amount, Double result) {
+    public ConvertDTO() {
+    }
+
+    public ConvertDTO(String currencyFrom, String currencyTo, Double amount, Date date) {
         this.currencyFrom = currencyFrom;
         this.currencyTo = currencyTo;
         this.amount = amount;
-        this.result = result;
+        this.date = date;
     }
 
     public String getCurrencyFrom() {
@@ -41,11 +55,11 @@ public class ConvertingResultDTO {
         this.amount = amount;
     }
 
-    public Double getResult() {
-        return result;
+    public Date getDate() {
+        return date;
     }
 
-    public void setResult(Double result) {
-        this.result = result;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
