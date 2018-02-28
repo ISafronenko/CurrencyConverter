@@ -36,10 +36,4 @@ public class MainController {
         logger.debug("Redirecting to login page.");
         return "login";
     }
-
-    @GetMapping("/user")
-    public String userIndex() {
-        logger.debug("Redirecting to user/index.");
-        return "user/index";
-    }
 }

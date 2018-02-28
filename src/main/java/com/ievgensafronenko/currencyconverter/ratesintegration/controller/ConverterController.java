@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,9 @@ public class ConverterController {
 
     @Autowired
     Logger logger;
+
+    @Value("#{'${currencies}'.split(',')}")
+    private List<String> currencies;
 
     @ModelAttribute("convert")
     public ConvertDTO convertDTO() {
@@ -74,6 +78,9 @@ public class ConverterController {
         logger.debug("For user email: {} {} records has been found", userEmail, size);
         model.addAttribute("previousConversions", previousConversions);
         model.addAttribute("convertResult", convertResult);
+
+        //TODO Temp solution and need to be changed to @ControllerAdvice.
+        model.addAttribute("currencies", currencies);
 
         logger.debug("Redirecting to index");
         return "index";
