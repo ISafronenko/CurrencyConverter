@@ -22,3 +22,4 @@ logging:
         org.springframework.security: INFO
 
 rate.service.url: https://openexchangerates.org/api/latest.json?app_id=
+previous.results.count: 10
