@@ -17,7 +17,7 @@ jpa:
 # Logging configurations
 logging:
     level:
-        root: WARN
+        root: DEBUG
         org.springframework.web: INFO
         org.springframework.security: INFO
 

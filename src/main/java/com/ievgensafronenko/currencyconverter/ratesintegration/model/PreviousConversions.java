@@ -1,16 +1,14 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Entity for storing historical data.
  */
 @Entity
-public class HistoryData {
+@Table(name = "conversions")
+public class PreviousConversions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,10 +21,10 @@ public class HistoryData {
     private Double result;
     private Date date;
 
-    public HistoryData() {
+    public PreviousConversions() {
     }
 
-    public HistoryData(String userEmail, String currencyFrom, String currencyTo, Double amount, Double result, Date date) {
+    public PreviousConversions(String userEmail, String currencyFrom, String currencyTo, Double amount, Double result, Date date) {
         this.userEmail = userEmail;
         this.currencyFrom = currencyFrom;
         this.currencyTo = currencyTo;
@@ -81,5 +79,18 @@ public class HistoryData {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "PreviousConversions{" +
+                "id=" + id +
+                ", userEmail='" + userEmail + '\'' +
+                ", currencyFrom='" + currencyFrom + '\'' +
+                ", currencyTo='" + currencyTo + '\'' +
+                ", amount=" + amount +
+                ", result=" + result +
+                ", date=" + date +
+                '}';
     }
 }

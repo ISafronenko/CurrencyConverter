@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * Class represent results of currency converting.
+ * Class represent data transfer object for getting data from currency convert form.
  */
 public class ConvertDTO {
 
@@ -61,5 +61,15 @@ public class ConvertDTO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "ConvertDTO{" +
+                "currencyFrom='" + currencyFrom + '\'' +
+                ", currencyTo='" + currencyTo + '\'' +
+                ", amount=" + amount +
+                ", date=" + date +
+                '}';
     }
 }

@@ -11,18 +11,8 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rate {
 
-    @JsonProperty("base")
-    private String base;
     @JsonProperty("rates")
     private Map<String, Double> rates;
-
-    public String getBase() {
-        return base;
-    }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
 
     public Map<String, Double> getRates() {
         return rates;
@@ -35,8 +25,7 @@ public class Rate {
     @Override
     public String toString() {
         return "Rate{" +
-                "base='" + base + '\'' +
-                ", rates=" + rates +
+                "rates=" + rates +
                 '}';
     }
 }

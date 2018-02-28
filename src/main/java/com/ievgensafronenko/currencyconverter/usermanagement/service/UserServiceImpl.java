@@ -1,12 +1,14 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.service;
 
-import com.ievgensafronenko.currencyconverter.usermanagement.repository.UserRepository;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.Role;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
+import com.ievgensafronenko.currencyconverter.usermanagement.repository.UserRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,8 +25,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    Logger logger;
+    @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -37,11 +40,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        logger.debug("Loading user by email: {}", email);
+
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
+            logger.error("Can't load user by email: {}", email);
             throw new UsernameNotFoundException("Invalid username or password.");
         }
+
+        logger.debug("User successfully loaded: {}", user);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
@@ -65,13 +74,39 @@ public class UserServiceImpl implements UserService {
      * @return saved user.
      */
     public User save(UserRegistrationDto userDTO) {
+
+        logger.debug("Saving user: {}", userDTO);
+
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
+        user.setDate(userDTO.getDob());
+        user.setStreet(userDTO.getStreet());
+        user.setCode(userDTO.getCode());
+        user.setCity(userDTO.getCity());
+        user.setCountry(userDTO.getCountry());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        logger.debug("User successfully saved: {}", savedUser);
+
+        return savedUser;
+    }
+
+    @Override
+    public String loggedUserEmail() {
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userEmail = "";
+        if (user != null && user.getUsername() != null) {
+            userEmail = user.getUsername();
+        }
+
+        logger.debug("Get user email of current user: ", userEmail);
+
+        return userEmail;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

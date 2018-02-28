@@ -1,6 +1,7 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service;
 
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class OpenExchangeService implements RateService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    Logger logger;
+
     @Value("${rate.service.url}")
     private String url;
 
@@ -25,8 +29,9 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public Rate getRates() {
+        logger.debug("Loading rates from openexchangerates.org");
         Rate rate = restTemplate.getForObject(url, Rate.class);
-        System.out.println(rate);
+        logger.debug("Loaded rates from openexchangerates.org: \n {}");
         return rate;
     }
 }

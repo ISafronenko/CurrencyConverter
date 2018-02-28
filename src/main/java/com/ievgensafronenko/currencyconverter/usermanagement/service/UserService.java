@@ -24,4 +24,11 @@ public interface UserService extends UserDetailsService {
      * @return - stored user object.
      */
     User save(UserRegistrationDto userDTO);
+
+    /**
+     * Method for getting logged in user email.
+     *
+     * @return - string with user email.
+     */
+    String loggedUserEmail();
 }

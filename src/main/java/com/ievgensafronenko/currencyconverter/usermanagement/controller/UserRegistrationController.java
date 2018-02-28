@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,13 +32,15 @@ public class UserRegistrationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private Logger logger;
+    @Value("#{'${countries}'.split(',')}")
+    private List<String> countries;
+
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
         return new UserRegistrationDto();
     }
-
-    @Value("#{'${countries}'.split(',')}")
-    private List<String> countries;
 
     @ApiOperation(value = "Endpoint for returning user registration form.")
     @ApiResponses(
@@ -64,8 +66,12 @@ public class UserRegistrationController {
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
                                       BindingResult result, Model model) {
 
-        User existing = userService.findByEmail(userDto.getEmail());
+        String userEmail = userDto.getEmail();
+        logger.debug("Starting registering user account for user email: {}", userEmail);
+
+        User existing = userService.findByEmail(userEmail);
         if (existing != null) {
+            logger.error("User with email: {} are already exists", userEmail);
             result.rejectValue("email", null, "There is already an account registered with that email");
         }
 
@@ -75,6 +81,8 @@ public class UserRegistrationController {
         }
 
         userService.save(userDto);
+        logger.debug("User account successfully created {}", userDto);
+        logger.debug("Redirecting to login.");
         return "redirect:/login";
     }
 }

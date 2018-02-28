@@ -14,9 +14,9 @@
 
 <div class="container">
 
-    <h1>Welcome to Currency Converter</h1>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
+            <h1>Welcome to Currency Converter</h1>
             <form th:action="@{/convert}" th:object="${convert}" method="post">
 
                 <p class="error-message"
@@ -91,11 +91,11 @@
                     <th>Result</th>
                     <th>Date</th>
                 </tr>
-                <tr th:each="histData : ${histDatas}">
-                    <td th:text="${histData.currencyFrom}">From</td>
-                    <td th:text="${histData.currencyTo}">To</td>
-                    <td th:text="${histData.amount}">0.00</td>
-                    <td th:text="${histData.result}">0.00</td>
+                <tr th:each="histData : ${previousConversions}">
+                    <td th:text="${histData.currencyFrom}"></td>
+                    <td th:text="${histData.currencyTo}"></td>
+                    <td th:text="${histData.amount}"></td>
+                    <td th:text="${histData.result}"></td>
                     <td th:text="${histData.date}"></td>
 
                 </tr>

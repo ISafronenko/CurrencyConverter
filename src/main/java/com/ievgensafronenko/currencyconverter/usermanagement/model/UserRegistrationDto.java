@@ -147,4 +147,20 @@ public class UserRegistrationDto {
     public void setTerms(Boolean terms) {
         this.terms = terms;
     }
+
+    @Override
+    public String toString() {
+        return "UserRegistrationDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", code='" + code + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", country='" + country + '\'' +
+                ", dob=" + dob +
+                ", email='" + email + '\'' +
+                ", confirmEmail='" + confirmEmail + '\'' +
+                ", terms=" + terms +
+                '}';
+    }
 }
