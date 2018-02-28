@@ -50,6 +50,59 @@
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group"
+                     th:classappend="${#fields.hasErrors('dob')}? 'has-error':''">
+                    <label for="dob" class="control-label">Date of Birth</label>
+                    <input type="date" id="dob"
+                           class="form-control"
+                           th:field="*{dob}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('dob')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('street')}? 'has-error':''">
+                    <label for="street" class="control-label">Street</label>
+                    <input id="street"
+                           class="form-control"
+                           th:field="*{street}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('street')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('code')}? 'has-error':''">
+                    <label for="code" class="control-label">ZIP Code</label>
+                    <input id="code"
+                           class="form-control"
+                           th:field="*{code}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('code')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('city')}? 'has-error':''">
+                    <label for="city" class="control-label">City</label>
+                    <input id="city"
+                           class="form-control"
+                           th:field="*{city}"/>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('city')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('country')}? 'has-error':''">
+                    <label for="country" class="control-label">Country</label>
+                    <select id="country"
+                            class="form-control"
+                            th:field="*{country}">
+                        <option th:each="country : ${countries}"
+                                th:value="${country}" th:text="${country}"></option>
+                    </select>
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('country')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
                      th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
                     <label for="email" class="control-label">E-mail</label>
                     <input id="email"

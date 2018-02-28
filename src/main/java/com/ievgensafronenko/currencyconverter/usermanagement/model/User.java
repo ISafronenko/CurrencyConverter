@@ -2,6 +2,7 @@ package com.ievgensafronenko.currencyconverter.usermanagement.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * JPA Entity for persisting User related information.
@@ -15,6 +16,11 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String code;
+    private String city;
+    private String street;
+    private String country;
+    private Date date;
     private String email;
     private String password;
 
@@ -29,21 +35,6 @@ public class User {
 
     public User() {
         //JPA Related
-    }
-
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -70,6 +61,46 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -92,17 +123,5 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + "############" + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 }

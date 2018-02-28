@@ -8,7 +8,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Controller which handles user registration.
@@ -33,6 +37,9 @@ public class UserRegistrationController {
         return new UserRegistrationDto();
     }
 
+    @Value("#{'${countries}'.split(',')}")
+    private List<String> countries;
+
     @ApiOperation(value = "Endpoint for returning user registration form.")
     @ApiResponses(
             value = {
@@ -41,7 +48,8 @@ public class UserRegistrationController {
             }
     )
     @GetMapping
-    public String showRegistrationForm() {
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("countries", countries);
         return "registration";
     }
 
@@ -54,7 +62,7 @@ public class UserRegistrationController {
     )
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
-                                      BindingResult result) {
+                                      BindingResult result, Model model) {
 
         User existing = userService.findByEmail(userDto.getEmail());
         if (existing != null) {
@@ -62,6 +70,7 @@ public class UserRegistrationController {
         }
 
         if (result.hasErrors()) {
+            model.addAttribute("countries", countries);
             return "registration";
         }
 
