@@ -66,6 +66,6 @@ public class CurrencyConverterService {
                         currencyTo,
                         amount,
                         formattedResult, new Date()));
-        return result;
+        return formattedResult;
     }
 }

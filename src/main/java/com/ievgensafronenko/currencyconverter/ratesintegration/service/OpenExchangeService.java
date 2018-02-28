@@ -4,6 +4,7 @@ import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +20,9 @@ public class OpenExchangeService implements RateService {
     @Autowired
     Logger logger;
 
+    @Autowired
+    private Environment env;
+
     @Value("${rate.service.url}")
     private String url;
 
@@ -29,8 +33,9 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public Rate getRates() {
+        String openexchangerates_key = env.getProperty("openexchangerates_key");
         logger.debug("Loading rates from openexchangerates.org");
-        Rate rate = restTemplate.getForObject(url, Rate.class);
+        Rate rate = restTemplate.getForObject(url+ openexchangerates_key, Rate.class);
         logger.debug("Loaded rates from openexchangerates.org: \n {}");
         return rate;
     }
