@@ -12,7 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -24,7 +25,10 @@ public class UserRegistrationTest {
     private static final String LAST_NAME = "user 2";
     private static final String EMAIL = "user2@email.com";
     private static final String PASSWORD = "password";
-    private static final String REGISTRATION_SUCCESS_REDIRECT = "/registration?success";
+    private static final String REGISTRATION_SUCCESS_REDIRECT = "/login";
+    private static final String CODE = "81673";
+    private static final String CITY = "Berlin";
+    private static final String COUNTRY = "Germany";
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,8 +42,13 @@ public class UserRegistrationTest {
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("firstName", FIRST_NAME)
                                 .param("lastName", LAST_NAME)
-                                .param("email", EMAIL)
+                                .param("code", CODE)
+                                .param("city", CITY)
+                                .param("street", "Unter den Linden")
+                                .param("country", COUNTRY)
+                                .param("dob", "1986-10-10")
                                 .param("confirmEmail", EMAIL)
+                                .param("email", EMAIL)
                                 .param("password", PASSWORD)
                                 .param("confirmPassword", PASSWORD)
                                 .param("terms", "on")
