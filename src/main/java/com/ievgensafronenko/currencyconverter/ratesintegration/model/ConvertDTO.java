@@ -3,7 +3,10 @@ package com.ievgensafronenko.currencyconverter.ratesintegration.model;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 import java.util.Date;
 
 /**
@@ -13,12 +16,16 @@ public class ConvertDTO {
 
     @NotEmpty
     private String currencyFrom;
+
     @NotEmpty
     private String currencyTo;
+
     @NotNull
     private Double amount;
+
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past
     private Date date;
 
     public ConvertDTO() {

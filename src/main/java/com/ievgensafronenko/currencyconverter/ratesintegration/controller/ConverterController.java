@@ -40,9 +40,6 @@ public class ConverterController {
     @Autowired
     Logger logger;
 
-    @Value("#{'${currencies}'.split(',')}")
-    private List<String> currencies;
-
     @ModelAttribute("convert")
     public ConvertDTO convertDTO() {
         return new ConvertDTO();
@@ -61,8 +58,19 @@ public class ConverterController {
 
         logger.debug("ConvertDTO received: {}", convertDTO);
 
-        Double convertResult = currencyConverter.convert(convertDTO);
+        if(convertDTO.getDate() == null){
+            logger.error("Date cannot be null");
+            result.rejectValue("date", null, "Date cannot be null");
+            return "/index";
+        } else if (convertDTO.getAmount() <= 0) {
+            logger.error("Amount cannot be negative");
+            result.rejectValue("amount", null, "Amount cannot be negative");
+            return "/index";
+        } else if (result.hasErrors()) {
+            return "/index";
+        }
 
+        Double convertResult = currencyConverter.convert(convertDTO);
         String userEmail = userService.loggedUserEmail();
 
         logger.debug("Getting previous conversions data for user email: {}", userEmail);
@@ -78,10 +86,6 @@ public class ConverterController {
         logger.debug("For user email: {} {} records has been found", userEmail, size);
         model.addAttribute("previousConversions", previousConversions);
         model.addAttribute("convertResult", convertResult);
-
-        //TODO Temp solution and need to be changed to @ControllerAdvice.
-        model.addAttribute("currencies", currencies);
-
         logger.debug("Redirecting to index");
         return "index";
     }

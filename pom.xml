@@ -64,11 +64,6 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-        </dependency>
-
         <!-- Bootstrap and jquery -->
         <dependency>
             <groupId>org.webjars</groupId>

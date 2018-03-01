@@ -34,13 +34,6 @@ public class UserRegistrationController {
 
     @Autowired
     private Logger logger;
-    @Value("#{'${countries}'.split(',')}")
-    private List<String> countries;
-
-    @ModelAttribute("user")
-    public UserRegistrationDto userRegistrationDto() {
-        return new UserRegistrationDto();
-    }
 
     @ApiOperation(value = "Endpoint for returning user registration form.")
     @ApiResponses(
@@ -50,8 +43,7 @@ public class UserRegistrationController {
             }
     )
     @GetMapping
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("countries", countries);
+    public String showRegistrationForm() {
         return "registration";
     }
 
@@ -76,7 +68,6 @@ public class UserRegistrationController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("countries", countries);
             return "registration";
         }
 
