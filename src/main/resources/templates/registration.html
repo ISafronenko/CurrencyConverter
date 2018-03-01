@@ -150,7 +150,7 @@
                            type="checkbox"
                            th:field="*{terms}"/>
                     <label class="control-label" for="terms">
-                        I agree with the <a href="#">terms and conditions</a> for Registration.
+                        I agree with the <a href="https://en.wikipedia.org/wiki/Terms_of_service" rel="noopener noreferrer" target="_blank">terms and conditions</a> for Registration.
                     </label>
                     <p class="error-message"
                        th:each="error : ${#fields.errors('terms')}"
