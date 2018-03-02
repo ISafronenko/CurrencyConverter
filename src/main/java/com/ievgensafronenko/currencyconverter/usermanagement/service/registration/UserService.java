@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.usermanagement.service;
+package com.ievgensafronenko.currencyconverter.usermanagement.service.registration;
 
 import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;

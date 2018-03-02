@@ -32,6 +32,7 @@ public class UserRegistrationDto {
     @NotEmpty
     private String street;
 
+    @Size(min = 2, max = 30)
     @NotEmpty
     private String country;
 

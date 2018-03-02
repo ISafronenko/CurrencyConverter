@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.ratesintegration.service;
+package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
 import org.slf4j.Logger;
@@ -15,10 +15,10 @@ import org.springframework.web.client.RestTemplate;
 public class OpenExchangeService implements RateService {
 
     @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Autowired
-    Logger logger;
+    private Logger logger;
 
     @Autowired
     private Environment env;

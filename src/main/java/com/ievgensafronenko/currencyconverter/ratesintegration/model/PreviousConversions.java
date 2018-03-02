@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Entity for storing historical data.
+ * Entity for storing historical data of previous conversions.
  */
 @Entity
 @Table(name = "conversions")

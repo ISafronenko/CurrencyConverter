@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.usermanagement.service;
+package com.ievgensafronenko.currencyconverter.usermanagement.service.registration;
 
 import com.ievgensafronenko.currencyconverter.usermanagement.model.Role;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    Logger logger;
+    private Logger logger;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

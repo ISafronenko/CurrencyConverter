@@ -2,16 +2,15 @@ package com.ievgensafronenko.currencyconverter.ratesintegration.controller;
 
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.PreviousConversions;
-import com.ievgensafronenko.currencyconverter.ratesintegration.service.CurrencyConverterService;
-import com.ievgensafronenko.currencyconverter.ratesintegration.service.PreviousConversionsStorageService;
-import com.ievgensafronenko.currencyconverter.usermanagement.service.UserService;
+import com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion.CurrencyConverterService;
+import com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion.PreviousConversionsStorageService;
+import com.ievgensafronenko.currencyconverter.ratesintegration.service.validation.CurrencyConverterValidationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,21 +28,24 @@ import java.util.List;
 public class ConverterController {
 
     @Autowired
-    CurrencyConverterService currencyConverter;
+    private CurrencyConverterService currencyConverter;
 
     @Autowired
-    PreviousConversionsStorageService previousConversionsStorageService;
+    private PreviousConversionsStorageService previousConversionsStorageService;
 
     @Autowired
-    UserService userService;
+    private CurrencyConverterValidationService validationService;
 
     @Autowired
-    Logger logger;
+    private Logger logger;
 
     @ModelAttribute("convert")
     public ConvertDTO convertDTO() {
         return new ConvertDTO();
     }
+
+    private static final String CONVERT_RESULT = "convertResult";
+    private static final String PREVIOUS_CONVERSIONS = "previousConversions";
 
     @ApiOperation(value = "Endpoint for converting currency.")
     @ApiResponses(
@@ -54,39 +56,43 @@ public class ConverterController {
     )
     @PostMapping(path = "/convert")
     public String convert(@ModelAttribute("convert") @Valid ConvertDTO convertDTO,
-                          BindingResult result, Model model) {
+                          BindingResult bindingResult, Model model) {
 
         logger.debug("ConvertDTO received: {}", convertDTO);
 
-        if(convertDTO.getDate() == null){
-            logger.error("Date cannot be null");
-            result.rejectValue("date", null, "Date cannot be null");
-            return "/index";
-        } else if (convertDTO.getAmount() <= 0) {
-            logger.error("Amount cannot be negative");
-            result.rejectValue("amount", null, "Amount cannot be negative");
-            return "/index";
-        } else if (result.hasErrors()) {
-            return "/index";
+        if (bindingResult.hasErrors() || validationService.validate(convertDTO, bindingResult)) {
+            addPreviousConversionsToResponse(model);
+            logger.debug("Validation failed redirecting to index.");
+            return "index";
         }
 
-        Double convertResult = currencyConverter.convert(convertDTO);
-        String userEmail = userService.loggedUserEmail();
+        calculateResult(convertDTO, model);
 
-        logger.debug("Getting previous conversions data for user email: {}", userEmail);
-        List<PreviousConversions> previousConversions = previousConversionsStorageService
-                .findByUserEmailOrderByDateDesc(userEmail);
-
-        if (previousConversions == null || previousConversions.size() == 0) {
-            logger.debug("Can't load previous conversions for user email: {}", userEmail);
-        }
-
-        int size = previousConversions.size();
-
-        logger.debug("For user email: {} {} records has been found", userEmail, size);
-        model.addAttribute("previousConversions", previousConversions);
-        model.addAttribute("convertResult", convertResult);
         logger.debug("Redirecting to index");
         return "index";
+    }
+
+    /**
+     * Method for adding results of calculation to model.
+     * Also, we are adding previous conversion data to model.
+     *
+     * @param convertDTO - dto with form data.
+     * @param model      - model.
+     */
+    private void calculateResult(ConvertDTO convertDTO, Model model) {
+        Double convertResult = currencyConverter.convert(convertDTO);
+        addPreviousConversionsToResponse(model);
+        model.addAttribute(CONVERT_RESULT, convertResult);
+    }
+
+    /**
+     * Method for adding results of previous conversions to model.
+     *
+     * @param model updated model.
+     */
+    private void addPreviousConversionsToResponse(Model model) {
+        List<PreviousConversions> previousConversions = previousConversionsStorageService
+                .findByUserEmailOrderByDateDesc();
+        model.addAttribute(PREVIOUS_CONVERSIONS, previousConversions);
     }
 }

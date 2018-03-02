@@ -1,15 +1,14 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.controller;
 
-import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
 import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
-import com.ievgensafronenko.currencyconverter.usermanagement.service.UserService;
+import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
+import com.ievgensafronenko.currencyconverter.usermanagement.service.validation.UserRegistrationValidationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Controller which handles user registration.
@@ -28,6 +26,9 @@ import java.util.List;
 @RequestMapping("/registration")
 @Api(value = "User registration resource", description = "This is API for user registration.")
 public class UserRegistrationController {
+
+    @Autowired
+    private UserRegistrationValidationService validationService;
 
     @Autowired
     private UserService userService;
@@ -56,18 +57,10 @@ public class UserRegistrationController {
     )
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
-                                      BindingResult result, Model model) {
+                                      BindingResult bindingResult) {
 
-        String userEmail = userDto.getEmail();
-        logger.debug("Starting registering user account for user email: {}", userEmail);
-
-        User existing = userService.findByEmail(userEmail);
-        if (existing != null) {
-            logger.error("User with email: {} are already exists", userEmail);
-            result.rejectValue("email", null, "There is already an account registered with that email");
-        }
-
-        if (result.hasErrors()) {
+        if (bindingResult.hasErrors() || validationService.validate(userDto, bindingResult)) {
+            logger.debug("Validation has failed for user {}", userDto.getEmail());
             return "registration";
         }
 

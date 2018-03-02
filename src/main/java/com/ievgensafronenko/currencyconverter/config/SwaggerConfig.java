@@ -29,7 +29,7 @@ public class SwaggerConfig {
 
     private ApiInfo metaInfo() {
 
-        ApiInfo apiInfo = new ApiInfo(
+        return new ApiInfo(
                 "Currency Converter REST API",
                 "Currency converter code challenge for Zooplus AG",
                 "1.00",
@@ -39,6 +39,5 @@ public class SwaggerConfig {
                 "Apache License Version 2.0",
                 "https://www.apache.org/licenses/"
         );
-        return apiInfo;
     }
 }

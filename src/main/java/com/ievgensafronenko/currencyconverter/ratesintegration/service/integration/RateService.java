@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.ratesintegration.service;
+package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
 import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
 
