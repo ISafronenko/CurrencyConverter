@@ -34,7 +34,7 @@ public class CurrencyConverterValidationService {
             isValidationFailed = true;
         } else if (convertDTO.getAmount() <= 0) {
             logger.error("Amount cannot be negative");
-            result.rejectValue("amount", null, "Amount cannot be negative.");
+            result.rejectValue("amount", null, "Amount cannot be negative or 0");
             isValidationFailed = true;
         } else if (result.hasErrors()) {
             isValidationFailed = true;

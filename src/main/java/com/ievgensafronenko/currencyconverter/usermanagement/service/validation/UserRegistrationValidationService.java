@@ -79,7 +79,7 @@ public class UserRegistrationValidationService {
         boolean confirmationDataCorrect = isComfirmationDataCorrect(email, confirmEmail);
 
         if (confirmationDataCorrect) {
-            bindingResult.rejectValue("email", null, "Email das not match confirmation email.");
+            bindingResult.rejectValue("email", null, "Email does not match confirmation email.");
         }
 
         return confirmationDataCorrect;
@@ -98,7 +98,7 @@ public class UserRegistrationValidationService {
         boolean confirmationDataCorrect = isComfirmationDataCorrect(password, confirmPassword);
 
         if (confirmationDataCorrect) {
-            bindingResult.rejectValue("password", null, "Password das not match confirmation password.");
+            bindingResult.rejectValue("password", null, "Password does not match confirmation password.");
         }
 
         return confirmationDataCorrect;

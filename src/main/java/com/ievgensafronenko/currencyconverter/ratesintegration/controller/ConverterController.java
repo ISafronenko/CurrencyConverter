@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  */
 @Controller
 @Api(value = "Currency converter resource", description = "This is currency converting.")
+@RequestMapping("/convert")
 public class ConverterController {
 
     @Autowired
@@ -47,6 +50,11 @@ public class ConverterController {
     private static final String CONVERT_RESULT = "convertResult";
     private static final String PREVIOUS_CONVERSIONS = "previousConversions";
 
+    @GetMapping
+    public String redirectToIndex() {
+        return "index";
+    }
+
     @ApiOperation(value = "Endpoint for converting currency.")
     @ApiResponses(
             value = {
@@ -54,7 +62,7 @@ public class ConverterController {
                     @ApiResponse(code = 500, message = "Temporary technical server error")
             }
     )
-    @PostMapping(path = "/convert")
+    @PostMapping
     public String convert(@ModelAttribute("convert") @Valid ConvertDTO convertDTO,
                           BindingResult bindingResult, Model model) {
 
