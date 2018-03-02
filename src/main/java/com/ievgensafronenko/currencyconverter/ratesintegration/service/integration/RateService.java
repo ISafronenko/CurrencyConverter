@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 
 /**
  * Interface which define type for integrations with rate exchange services.
@@ -12,5 +12,5 @@ public interface RateService {
      *
      * @return - rates.
      */
-    Rate getRates();
+    RateDTO getRates();
 }

@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.ratesintegration.model;
+package com.ievgensafronenko.currencyconverter.ratesintegration.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;

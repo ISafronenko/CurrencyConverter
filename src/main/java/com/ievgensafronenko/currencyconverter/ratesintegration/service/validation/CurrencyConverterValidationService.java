@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.validation;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

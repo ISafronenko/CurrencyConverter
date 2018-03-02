@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.ratesintegration.model;
+package com.ievgensafronenko.currencyconverter.ratesintegration.entities;
 
 import javax.persistence.*;
 import java.util.Date;

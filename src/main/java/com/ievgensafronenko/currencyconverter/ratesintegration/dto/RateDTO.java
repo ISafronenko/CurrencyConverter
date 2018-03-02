@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.ratesintegration.model;
+package com.ievgensafronenko.currencyconverter.ratesintegration.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import java.util.Map;
  * Class for deserializing json from rates service to Java POJO.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Rate {
+public class RateDTO {
 
     @JsonProperty("rates")
     private Map<String, Double> rates;
@@ -24,7 +24,7 @@ public class Rate {
 
     @Override
     public String toString() {
-        return "Rate{" +
+        return "RateDTO{" +
                 "rates=" + rates +
                 '}';
     }

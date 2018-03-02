@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,11 +32,11 @@ public class OpenExchangeService implements RateService {
      * @return rates.
      */
     @Override
-    public Rate getRates() {
+    public RateDTO getRates() {
         String openexchangerates_key = env.getProperty("openexchangerates_key");
         logger.debug("Loading rates from openexchangerates.org");
-        Rate rate = restTemplate.getForObject(url+ openexchangerates_key, Rate.class);
+        RateDTO rateDTO = restTemplate.getForObject(url+ openexchangerates_key, RateDTO.class);
         logger.debug("Loaded rates from openexchangerates.org: \n {}");
-        return rate;
+        return rateDTO;
     }
 }

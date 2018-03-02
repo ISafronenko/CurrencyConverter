@@ -1,7 +1,7 @@
 package com.ievgensafronenko.currencyconverter.config;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
-import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
+import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;

@@ -1,6 +1,6 @@
-package com.ievgensafronenko.currencyconverter.common;
+package com.ievgensafronenko.currencyconverter.common.controller;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.PreviousConversions;
+import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion.PreviousConversionsStorageService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

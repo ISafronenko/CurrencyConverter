@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.integration.RateService;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,12 +40,12 @@ public class ConverterFormTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Rate rate = new Rate();
+        RateDTO rateDTO = new RateDTO();
         Map<String, Double> rates = new HashMap<>();
         rates.put("EUR", 1.1d);
         rates.put("USD", 1d);
-        rate.setRates(rates);
-        when(rateService.getRates()).thenReturn(rate);
+        rateDTO.setRates(rates);
+        when(rateService.getRates()).thenReturn(rateDTO);
     }
 
     @Test

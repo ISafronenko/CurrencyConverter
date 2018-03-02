@@ -1,7 +1,7 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.service.registration;
 
-import com.ievgensafronenko.currencyconverter.usermanagement.model.User;
-import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
+import com.ievgensafronenko.currencyconverter.usermanagement.entities.User;
+import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**

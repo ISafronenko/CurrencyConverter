@@ -1,7 +1,7 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.controller;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.PreviousConversions;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
+import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion.CurrencyConverterService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion.PreviousConversionsStorageService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.validation.CurrencyConverterValidationService;
@@ -73,11 +73,11 @@ public class ConverterController {
     }
 
     /**
-     * Method for adding results of calculation to model.
-     * Also, we are adding previous conversion data to model.
+     * Method for adding results of calculation to entities.
+     * Also, we are adding previous conversion data to entities.
      *
      * @param convertDTO - dto with form data.
-     * @param model      - model.
+     * @param model      - entities.
      */
     private void calculateResult(ConvertDTO convertDTO, Model model) {
         Double convertResult = currencyConverter.convert(convertDTO);
@@ -86,9 +86,9 @@ public class ConverterController {
     }
 
     /**
-     * Method for adding results of previous conversions to model.
+     * Method for adding results of previous conversions to entities.
      *
-     * @param model updated model.
+     * @param model updated entities.
      */
     private void addPreviousConversionsToResponse(Model model) {
         List<PreviousConversions> previousConversions = previousConversionsStorageService

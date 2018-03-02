@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.controller;
 
-import com.ievgensafronenko.currencyconverter.usermanagement.model.UserRegistrationDto;
+import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.validation.UserRegistrationValidationService;
 import io.swagger.annotations.Api;
@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;

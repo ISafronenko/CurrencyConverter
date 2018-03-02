@@ -1,6 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.PreviousConversions;
+import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.repository.PreviousConversionsRepository;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
 import org.slf4j.Logger;

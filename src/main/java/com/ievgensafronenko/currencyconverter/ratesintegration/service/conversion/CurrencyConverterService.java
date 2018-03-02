@@ -1,8 +1,8 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion;
 
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.ConvertDTO;
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.PreviousConversions;
-import com.ievgensafronenko.currencyconverter.ratesintegration.model.Rate;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
+import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
+import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.integration.RateService;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class CurrencyConverterService {
 
         logger.debug("Starting conversion for following data: {}", convertDTO);
 
-        Rate rates = rateService.getRates();
+        RateDTO rates = rateService.getRates();
         Map<String, Double> ratesMap = rates.getRates();
 
         String currencyFrom = convertDTO.getCurrencyFrom();
