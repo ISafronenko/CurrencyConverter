@@ -3,6 +3,7 @@ package com.ievgensafronenko.currencyconverter.ratesintegration;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.integration.RateService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -48,6 +49,7 @@ public class ConverterFormTest {
         when(rateService.getRates()).thenReturn(rateDTO);
     }
 
+    @Ignore
     @Test
     @WithMockUser(username = "user1@email.com", roles = "USER")
     public void successConvertTest() throws Exception {
