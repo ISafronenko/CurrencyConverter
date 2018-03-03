@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -30,6 +32,8 @@ public class CurrencyConverterService {
     @Autowired
     private Logger logger;
 
+    private static final DateFormat FORMAT = new SimpleDateFormat("YYYY-MM-dd");
+
     /**
      * Method for currency converting.
      *
@@ -40,12 +44,13 @@ public class CurrencyConverterService {
 
         logger.debug("Starting conversion for following data: {}", convertDTO);
 
-        RateDTO rates = rateService.getRates();
-        Map<String, Double> ratesMap = rates.getRates();
-
         String currencyFrom = convertDTO.getCurrencyFrom();
         String currencyTo = convertDTO.getCurrencyTo();
         Double amount = convertDTO.getAmount();
+        Date dateOfRate = convertDTO.getDate();
+
+        RateDTO rates = getRateDTO(dateOfRate);
+        Map<String, Double> ratesMap = rates.getRates();
 
         logger.debug("Getting conversion rates from {} / to {}.", currencyFrom, currencyTo);
         Double rateFrom = ratesMap.get(currencyFrom);
@@ -65,8 +70,34 @@ public class CurrencyConverterService {
                         currencyFrom,
                         currencyTo,
                         amount,
-                        result, new Date()));
+                        result,
+                        new Date(),
+                        dateOfRate
+                ));
+
         return result;
+    }
+
+    /**
+     * Method for getting rates based on date.
+     *
+     * @param dateOfRate - date of rate.
+     * @return rates.
+     */
+    private RateDTO getRateDTO(Date dateOfRate) {
+
+        RateDTO rates;
+
+        if (dateOfRate.before(new Date())) {
+            String date = FORMAT.format(dateOfRate);
+            logger.debug("Getting historical rates for date {}", date);
+            rates = rateService.getRates(date);
+        } else {
+            logger.debug("Getting actual rates");
+            rates = rateService.getRates();
+        }
+
+        return rates;
     }
 
     private Double calculateResult(Double amount, Double rateFrom, Double rateTo) {

@@ -28,4 +28,6 @@ logging:
         org.springframework.security: INFO
 
 rate.service.url: https://openexchangerates.org/api/latest.json?app_id=
+rate.service.url.historical: https://openexchangerates.org/api/historical/{}.json?app_id=
 previous.results.count: 10
+latest.date: 01/01/1999

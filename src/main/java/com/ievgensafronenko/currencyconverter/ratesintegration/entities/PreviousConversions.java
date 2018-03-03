@@ -19,18 +19,28 @@ public class PreviousConversions {
     private String currencyTo;
     private Double amount;
     private Double result;
-    private Date date;
+    private Date dateOfRate;
+    private Date dateOfRequest;
 
     public PreviousConversions() {
     }
 
-    public PreviousConversions(String userEmail, String currencyFrom, String currencyTo, Double amount, Double result, Date date) {
+    public PreviousConversions(String userEmail, String currencyFrom, String currencyTo, Double amount, Double result, Date dateOfRate, Date dateOfRequest) {
         this.userEmail = userEmail;
         this.currencyFrom = currencyFrom;
         this.currencyTo = currencyTo;
         this.amount = amount;
         this.result = result;
-        this.date = date;
+        this.dateOfRate = dateOfRate;
+        this.dateOfRequest = dateOfRequest;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserEmail() {
@@ -73,24 +83,19 @@ public class PreviousConversions {
         this.result = result;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateOfRate() {
+        return dateOfRate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateOfRate(Date dateOfRate) {
+        this.dateOfRate = dateOfRate;
     }
 
-    @Override
-    public String toString() {
-        return "PreviousConversions{" +
-                "id=" + id +
-                ", userEmail='" + userEmail + '\'' +
-                ", currencyFrom='" + currencyFrom + '\'' +
-                ", currencyTo='" + currencyTo + '\'' +
-                ", amount=" + amount +
-                ", result=" + result +
-                ", date=" + date +
-                '}';
+    public Date getDateOfRequest() {
+        return dateOfRequest;
+    }
+
+    public void setDateOfRequest(Date dateOfRequest) {
+        this.dateOfRequest = dateOfRequest;
     }
 }

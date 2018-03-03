@@ -70,13 +70,17 @@
                 <div class="form-group"
                      th:classappend="${#fields.hasErrors('date')}? 'has-error':''">
                     <label for="date" class="control-label">Date</label>
-                    <input type="date" id="dob"
+                    <input type="date" id="date"
                            class="form-control"
                            th:field="*{date}"/>
                     <p class="error-message"
                        th:each="error : ${#fields.errors('date')}"
                        th:text="${error}">Validation error</p>
                 </div>
+
+                <p class="text-muted">
+                    Historical data are End-Of-Day values, and are currently available from Jan 1st, 1999.
+                </p>
 
                 <div th:if="${convertResult} != null">
                     <p class="bg-success" th:text="${#numbers.formatDecimal(convertResult, 0, 'COMMA', 2, 'POINT')}"/>
@@ -96,7 +100,8 @@
                 <th>Currency To</th>
                 <th>Amount</th>
                 <th>Result</th>
-                <th>Date</th>
+                <th>Date of Rate</th>
+                <th>Date of Conversion</th>
                 </thead>
 
                 <tbody>
@@ -105,7 +110,8 @@
                     <td th:text="${histData.currencyTo}"></td>
                     <td th:text="${#numbers.formatDecimal(histData.amount, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${#numbers.formatDecimal(histData.result, 0, 'COMMA', 2, 'POINT')}"></td>
-                    <td th:text="${#dates.format(histData.date, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${#dates.format(histData.dateOfRate, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${#dates.format(histData.dateOfRequest, 'dd-MM-yyyy')}"></td>
                 </tr>
                 </tbody>
             </table>

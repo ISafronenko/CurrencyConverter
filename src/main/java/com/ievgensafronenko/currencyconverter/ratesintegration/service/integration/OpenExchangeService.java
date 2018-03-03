@@ -24,7 +24,11 @@ public class OpenExchangeService implements RateService {
     private Environment env;
 
     @Value("${rate.service.url}")
-    private String url;
+    private String latestRateUrl;
+
+    @Value("${rate.service.url.historical}")
+    private String historicalRateUrl;
+
 
     /**
      * Method for getting rates from rates exchange service.
@@ -33,10 +37,35 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public RateDTO getRates() {
-        String openexchangerates_key = env.getProperty("openexchangerates_key");
-        logger.debug("Loading rates from openexchangerates.org");
-        RateDTO rateDTO = restTemplate.getForObject(url+ openexchangerates_key, RateDTO.class);
+        logger.debug("Loading actual rates from openexchangerates.org");
+
+        String rateUrl = latestRateUrl + getKey();
+        RateDTO rateDTO = requestRates(rateUrl);
         logger.debug("Loaded rates from openexchangerates.org: \n {}");
         return rateDTO;
+    }
+
+    /**
+     * Method for getting rates from rates exchange service for specific date
+     *
+     * @param date string with date in 2001-02-16 format.
+     * @return rates.
+     */
+    @Override
+    public RateDTO getRates(String date) {
+        logger.debug("Loading rates from openexchangerates.org for date {}", date);
+
+        String rateUrl = historicalRateUrl.replace("{}", date)+getKey();
+        RateDTO rateDTO = requestRates(rateUrl);
+        logger.debug("Loaded rates from openexchangerates.org: \n {}");
+        return rateDTO;
+    }
+
+    private RateDTO requestRates(String rateUrl) {
+        return restTemplate.getForObject(rateUrl, RateDTO.class);
+    }
+
+    private String getKey() {
+        return env.getProperty("openexchangerates_key");
     }
 }

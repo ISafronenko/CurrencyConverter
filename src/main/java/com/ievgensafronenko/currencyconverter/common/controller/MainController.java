@@ -28,7 +28,6 @@ public class MainController {
     public String root(Model model) {
         logger.debug("Redirecting to index.");
 
-        //TODO move to ControllerAdvice
         List<PreviousConversions> previousConversions = previousConversionsStorageService
                 .findByUserEmailOrderByDateDesc();
         model.addAttribute(PREVIOUS_CONVERSIONS, previousConversions);

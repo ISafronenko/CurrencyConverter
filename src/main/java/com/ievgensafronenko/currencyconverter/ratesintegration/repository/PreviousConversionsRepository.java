@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface PreviousConversionsRepository extends JpaRepository<PreviousConversions, Long> {
-    List<PreviousConversions> findAllByUserEmailOrderByDateDesc(String email, Pageable pageable);
+    List<PreviousConversions> findAllByUserEmailOrderByDateOfRequestDesc(String email, Pageable pageable);
 }

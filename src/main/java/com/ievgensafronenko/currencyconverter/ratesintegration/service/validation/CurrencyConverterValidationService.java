@@ -3,8 +3,11 @@ package com.ievgensafronenko.currencyconverter.ratesintegration.service.validati
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+
+import java.util.Date;
 
 /**
  * Service for conversion data validation.
@@ -14,6 +17,9 @@ public class CurrencyConverterValidationService {
 
     @Autowired
     private Logger logger;
+
+    @Value("${latest.date}")
+    private Date latestDate;
 
     /**
      * Method for validating input from conversion form.
@@ -32,6 +38,10 @@ public class CurrencyConverterValidationService {
             logger.error("Date cannot be null");
             result.rejectValue("date", null, "Date cannot be null.");
             isValidationFailed = true;
+        } else if (convertDTO.getDate().before(latestDate)) {
+            logger.error("Date should be after 01/01/1999");
+            result.rejectValue("date", null, "Historical are available only from Jan 1st, 1999.");
+            isValidationFailed = true;
         } else if (convertDTO.getAmount() <= 0) {
             logger.error("Amount cannot be negative");
             result.rejectValue("amount", null, "Amount cannot be negative or 0");
@@ -44,4 +54,5 @@ public class CurrencyConverterValidationService {
 
         return isValidationFailed;
     }
+
 }
