@@ -105,7 +105,10 @@ mvn clean test
 This application can be deployed to different cloud providers (Heroku, Digital Ocean, Google App Engine or CloudFoundry).
 
 ## Monitoring and health checking
-TBD
+Here are some of the most common endpoints Spring Boot provides out of the box:
+
+/health – Shows application health information (a simple ‘status’ when accessed over an unauthenticated connection or full message details when authenticated); it’s not sensitive by default
+/info – Displays arbitrary application info; not sensitive by default
 
 ## Using Swagger
 
