@@ -13,6 +13,9 @@ Automated build and test run done via continuous integration server https://trav
 
 Latest version of application is deployed to Heroku and available via link: https://curren.herokuapp.com/
 
+## Current build status
+[![Build Status](https://travis-ci.org/ISafronenko/CurrencyConverter.svg?branch=master)](https://travis-ci.org/ISafronenko/CurrencyConverter)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
