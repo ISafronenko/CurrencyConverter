@@ -6,6 +6,9 @@ This protected currency converter application using a public currency converter 
 After the successful login the application can show the last 10 queries and their results on the main screen as reminder.
 Here is the list of allowed currencies: EUR, USD, GBP, NZD, AUD, JPY, HUF.
 
+**Important**
+Due to api limitations all conversions will be done through USD (for example EUR -> NZD will be EUR -> USD -> NZD).
+
 Automated build and test run done via continuous integration server https://travis-ci.org/
 
 Latest version of application is deployed to Heroku and available via link: https://curren.herokuapp.com/
@@ -30,7 +33,6 @@ $ java -version
 java version "1.8.0_102"
 Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
 Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)
-
 ```
 and *Maven*:
 
@@ -54,10 +56,23 @@ api_key:
 ```
 ***Open Exchange Rates Api key***
 
-For integration with https://openexchangerates.org/ you need to provide api key. 
+For integration with https://openexchangerates.org/ you need to provide api key.
+For security reason api key shouldn't appear in public github repository.
+That's why you need to create env variable openexchangerates_key and assign correct api key to it.
+You can register your own account at https://openexchangerates.org/ and get api key.
+
+For **Unix** system:
+To set it for current **shell and all processes started from current shell**:
+```
+export openexchangerates_key="3fd31199ac5b4..."
+```
+
+For **Windows**
+For windows env you can add env variable using this tutorials: https://www.java.com/en/download/help/path.xml
 
 ### Running
 
+**Important** Before running please check your environment variables and add openexchangerates_key as was mentioned before.
 To get an application running on development env:
 
 Via Maven spring-boot plugin:
@@ -73,6 +88,12 @@ mvn package
 java -jar target/currency-converter-0.0.1-SNAPSHOT.jar
 ```
 
+After successfull start:
+```
+Started CurrencyConverterApplication in 16.209 seconds (JVM running for 17.156)
+```
+you can use application via url http://localhost:8080/ 
+
 ## Running the tests
 
 Testing covered by integration tests using MockMvc and architectural structure using Archunit.
@@ -82,6 +103,16 @@ mvn clean test
 ```
 ## Deployment
 This application can be deployed to different cloud providers (Heroku, Digital Ocean, Google App Engine or CloudFoundry).
+
+## Monitoring and health checking
+TBD
+
+## Using Swagger
+
+All exposed endpoints are documented via Swagger.
+Please check: 
+* http://localhost:8080/swagger-ui.html on local host
+* https://curren.herokuapp.com/swagger-ui.html on internet
 
 ## Built With
 
