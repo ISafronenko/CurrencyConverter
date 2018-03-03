@@ -1,3 +1,9 @@
+info:
+    app:
+        name: Currency converter application
+        description: This is application allow you to convert currencies
+        version: 1.0.0
+
 # Hibernate datasource config
 spring:
     datasource:
