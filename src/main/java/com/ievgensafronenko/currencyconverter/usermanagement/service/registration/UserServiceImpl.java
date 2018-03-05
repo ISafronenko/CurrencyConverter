@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
             userEmail = user.getUsername();
         }
 
-        logger.debug("Get user email of current user: ", userEmail);
+        logger.error("Get user email of current user: ", userEmail);
 
         return userEmail;
     }

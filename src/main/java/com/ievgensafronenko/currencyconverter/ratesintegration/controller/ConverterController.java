@@ -66,17 +66,14 @@ public class ConverterController {
     public String convert(@ModelAttribute("convert") @Valid ConvertDTO convertDTO,
                           BindingResult bindingResult, Model model) {
 
-        logger.debug("ConvertDTO received: {}", convertDTO);
-
         if (bindingResult.hasErrors() || validationService.validate(convertDTO, bindingResult)) {
             addPreviousConversionsToResponse(model);
-            logger.debug("Validation failed redirecting to index.");
+            logger.error("ConvertDTO Validation failed.");
             return "index";
         }
 
         calculateResult(convertDTO, model);
 
-        logger.debug("Redirecting to index");
         return "index";
     }
 

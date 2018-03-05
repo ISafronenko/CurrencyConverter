@@ -29,7 +29,6 @@ public class OpenExchangeService implements RateService {
     @Value("${rate.service.url.historical}")
     private String historicalRateUrl;
 
-
     /**
      * Method for getting rates from rates exchange service.
      *
@@ -53,12 +52,8 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public RateDTO getRates(String date) {
-        logger.debug("Loading rates from openexchangerates.org for date {}", date);
-
         String rateUrl = historicalRateUrl.replace("{}", date)+getKey();
-        RateDTO rateDTO = requestRates(rateUrl);
-        logger.debug("Loaded rates from openexchangerates.org: \n {}");
-        return rateDTO;
+        return requestRates(rateUrl);
     }
 
     private RateDTO requestRates(String rateUrl) {

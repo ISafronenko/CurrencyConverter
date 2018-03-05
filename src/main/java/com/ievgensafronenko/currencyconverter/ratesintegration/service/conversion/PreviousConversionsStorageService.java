@@ -43,7 +43,7 @@ public class PreviousConversionsStorageService {
         List<PreviousConversions> resultList = repository.findAllByUserEmailOrderByDateOfRequestDesc(userEmail, tenResults);
 
         if (resultList == null || resultList.size() == 0) {
-            logger.debug("Can't load previous conversions for user email: {}", userEmail);
+            logger.error("Can't load previous conversions for user email: {}", userEmail);
         }
 
         return resultList;

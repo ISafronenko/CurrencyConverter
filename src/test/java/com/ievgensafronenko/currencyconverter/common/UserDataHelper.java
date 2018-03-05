@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.usermanagement.helper;
+package com.ievgensafronenko.currencyconverter.common;
 
 /**
  * Class contains constants for tests.

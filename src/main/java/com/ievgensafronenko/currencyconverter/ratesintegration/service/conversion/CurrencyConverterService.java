@@ -52,12 +52,8 @@ public class CurrencyConverterService {
         RateDTO rates = getRateDTO(dateOfRate);
         Map<String, Double> ratesMap = rates.getRates();
 
-        logger.debug("Getting conversion rates from {} / to {}.", currencyFrom, currencyTo);
         Double rateFrom = ratesMap.get(currencyFrom);
         Double rateTo = ratesMap.get(currencyTo);
-
-        logger.debug("Conversion rate between USD and Currency From {} is {}", currencyFrom, rateFrom);
-        logger.debug("Conversion rate between USD and Currency To {} is {}", currencyFrom, rateTo);
 
         Double result = calculateResult(amount, rateFrom, rateTo);
 
@@ -90,10 +86,8 @@ public class CurrencyConverterService {
 
         if (dateOfRate.before(new Date())) {
             String date = FORMAT.format(dateOfRate);
-            logger.debug("Getting historical rates for date {}", date);
             rates = rateService.getRates(date);
         } else {
-            logger.debug("Getting actual rates");
             rates = rateService.getRates();
         }
 

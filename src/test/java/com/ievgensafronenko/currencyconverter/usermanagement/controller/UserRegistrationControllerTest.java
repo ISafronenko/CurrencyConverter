@@ -1,4 +1,4 @@
-package com.ievgensafronenko.currencyconverter.usermanagement;
+package com.ievgensafronenko.currencyconverter.usermanagement.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.ievgensafronenko.currencyconverter.usermanagement.helper.UserDataHelper.*;
+import static com.ievgensafronenko.currencyconverter.common.UserDataHelper.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RegistrationTest {
+public class UserRegistrationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -59,13 +59,12 @@ public class UserRegistrationController {
                                       BindingResult bindingResult) {
 
         if (bindingResult.hasErrors() || validationService.validate(userDto, bindingResult)) {
-            logger.debug("Validation has failed for user {}", userDto.getEmail());
+            logger.error("Validation has failed for user {}", userDto.getEmail());
             return "registration";
         }
 
         userService.save(userDto);
         logger.debug("User account successfully created {}", userDto);
-        logger.debug("Redirecting to login.");
         return "redirect:/login";
     }
 }
