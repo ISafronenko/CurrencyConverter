@@ -1,5 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion;
 
+import com.ievgensafronenko.currencyconverter.common.service.ConfigService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.integration.RateService;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
@@ -33,12 +35,16 @@ public class CurrencyConverterServiceTest {
     private UserService userService;
 
     @Mock
+    private ConfigService configService;
+
+    @Mock
     private PreviousConversionsStorageService previousConversionsStorageService;
 
     @Before
     public void setUp() {
         when(rateService.getRates(anyObject())).thenReturn(getDefaultRates());
         when(rateService.getRates()).thenReturn(getDefaultRates());
+        given(configService.getDateFormat()).willReturn("yyyy-MM-dd");
         when(userService.loggedUserEmail()).thenReturn("user1@gmail.com");
     }
 

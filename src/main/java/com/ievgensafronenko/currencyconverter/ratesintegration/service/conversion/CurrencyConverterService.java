@@ -1,5 +1,6 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion;
 
+import com.ievgensafronenko.currencyconverter.common.service.ConfigService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.ConvertDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
@@ -21,19 +22,19 @@ import java.util.Map;
 @Slf4j
 public class CurrencyConverterService {
 
-    private static final DateFormat FORMAT = new SimpleDateFormat("YYYY-MM-dd");
-
     private RateService rateService;
     private PreviousConversionsStorageService previousConversionsStorageService;
     private UserService userService;
+    private ConfigService configService;
 
     @Autowired
     public CurrencyConverterService(RateService rateService,
                                     PreviousConversionsStorageService previousConversionsStorageService,
-                                    UserService userService) {
+                                    UserService userService, ConfigService configService) {
         this.rateService = rateService;
         this.previousConversionsStorageService = previousConversionsStorageService;
         this.userService = userService;
+        this.configService = configService;
     }
 
     /**
@@ -86,8 +87,10 @@ public class CurrencyConverterService {
 
         RateDTO rates;
 
+        String pattern = configService.getDateFormat();
+
         if (dateOfRate.before(new Date())) {
-            String date = FORMAT.format(dateOfRate);
+            String date = new SimpleDateFormat(pattern).format(dateOfRate);
             rates = rateService.getRates(date);
         } else {
             rates = rateService.getRates();

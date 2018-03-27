@@ -31,4 +31,7 @@ public class ConfigService {
 
     @Value("${latest.date}")
     private Date latestDate;
+
+    @Value("${date.format}")
+    private String dateFormat;
 }
