@@ -39,7 +39,7 @@ public class ArchitectureTest {
 
                 .whereLayer("config").mayNotBeAccessedByAnyLayer()
                 .whereLayer("repository").mayOnlyBeAccessedByLayers("service")
-                .whereLayer("service").mayOnlyBeAccessedByLayers("resource")
+                .whereLayer("service").mayOnlyBeAccessedByLayers("resource", "config")
                 .whereLayer("entities").mayOnlyBeAccessedByLayers( "service")
                 .whereLayer("dto").mayOnlyBeAccessedByLayers("resource", "service", "config")
                 .whereLayer("resource").mayNotBeAccessedByAnyLayer();

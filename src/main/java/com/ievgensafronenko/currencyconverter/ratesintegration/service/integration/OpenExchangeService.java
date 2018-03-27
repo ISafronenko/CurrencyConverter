@@ -1,9 +1,9 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
+import com.ievgensafronenko.currencyconverter.common.service.ConfigService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,20 +14,17 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j
 public class OpenExchangeService implements RateService {
-
-    @Value("${rate.service.url}")
-    private String latestRateUrl;
-
-    @Value("${rate.service.url.historical}")
-    private String historicalRateUrl;
-
     private RestTemplate restTemplate;
     private Environment env;
+    private ConfigService configService;
 
     @Autowired
-    public OpenExchangeService(RestTemplate restTemplate, Environment env) {
+    public OpenExchangeService(RestTemplate restTemplate,
+                               Environment env,
+                               ConfigService configService) {
         this.restTemplate = restTemplate;
         this.env = env;
+        this.configService = configService;
     }
 
     /**
@@ -39,7 +36,7 @@ public class OpenExchangeService implements RateService {
     public RateDTO getRates() {
         log.debug("Loading actual rates from openexchangerates.org");
 
-        String rateUrl = latestRateUrl + getKey();
+        String rateUrl = configService.getLatestRateUrl() + getKey();
         RateDTO rateDTO = requestRates(rateUrl);
         log.debug("Loaded rates from openexchangerates.org: \n {}");
         return rateDTO;
@@ -53,7 +50,7 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public RateDTO getRates(String date) {
-        String rateUrl = historicalRateUrl.replace("{}", date) + getKey();
+        String rateUrl = configService.getHistoricalRateUrl().replace("{}", date) + getKey();
         return requestRates(rateUrl);
     }
 

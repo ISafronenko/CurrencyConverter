@@ -1,11 +1,11 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.conversion;
 
+import com.ievgensafronenko.currencyconverter.common.service.ConfigService;
 import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.repository.PreviousConversionsRepository;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,8 @@ public class PreviousConversionsStorageService {
     @Autowired
     private UserService userService;
 
-    @Value("${previous.results.count}")
-    private Integer size;
+    @Autowired
+    private ConfigService configService;
 
     public void save(PreviousConversions data) {
         repository.save(data);
@@ -37,7 +37,7 @@ public class PreviousConversionsStorageService {
         String userEmail = userService.loggedUserEmail();
         log.debug("Getting previous conversions data for user email: {}", userEmail);
 
-        Pageable tenResults = new PageRequest(0, size);
+        Pageable tenResults = new PageRequest(0, configService.getPreviousResultsCount());
         List<PreviousConversions> resultList = repository.findAllByUserEmailOrderByDateOfRequestDesc(userEmail, tenResults);
 
         if (resultList == null || resultList.size() == 0) {

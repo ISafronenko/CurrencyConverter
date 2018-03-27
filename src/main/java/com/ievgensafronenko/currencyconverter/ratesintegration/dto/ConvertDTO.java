@@ -1,6 +1,7 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * Class represent data transfer object for getting data from currency convert form.
  */
 @Data
+@NoArgsConstructor
 public class ConvertDTO {
     @NotEmpty
     private String currencyFrom;
@@ -28,7 +30,4 @@ public class ConvertDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past
     private Date date;
-
-    public ConvertDTO() {
-    }
 }
