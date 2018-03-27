@@ -1,9 +1,9 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.service.validation;
 
-import com.ievgensafronenko.currencyconverter.usermanagement.entities.User;
 import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
+import com.ievgensafronenko.currencyconverter.usermanagement.entities.User;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -14,13 +14,15 @@ import java.util.Objects;
  * Service for user data input validation.
  */
 @Service
+@Slf4j
 public class UserRegistrationValidationService {
 
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private Logger logger;
+    public UserRegistrationValidationService(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Method for user registration form validation.
@@ -31,7 +33,7 @@ public class UserRegistrationValidationService {
      */
     public boolean validate(UserRegistrationDto userDto, BindingResult result) {
 
-        logger.debug("Validating input before registering user.");
+        log.debug("Validating input before registering user.");
         boolean isValidationFailed = false;
 
         if (isEmailConfirmationCorrect(userDto, result)
@@ -40,7 +42,7 @@ public class UserRegistrationValidationService {
             isValidationFailed = true;
         }
 
-        logger.debug("Is validation failed: {}", isValidationFailed);
+        log.debug("Is validation failed: {}", isValidationFailed);
         return isValidationFailed;
     }
 
@@ -53,12 +55,12 @@ public class UserRegistrationValidationService {
      */
     private boolean isUserAlreadyExists(UserRegistrationDto userDto, BindingResult bindingResult) {
         String userEmail = userDto.getEmail();
-        logger.debug("Starting registering user account for user email: {}", userEmail);
+        log.debug("Starting registering user account for user email: {}", userEmail);
 
         User existing = userService.findByEmail(userEmail);
 
         if (existing != null) {
-            logger.error("User with email: {} are already exists", userEmail);
+            log.error("User with email: {} are already exists", userEmail);
             bindingResult.rejectValue("email", null, "There is already an account registered with that email");
             return true;
         }

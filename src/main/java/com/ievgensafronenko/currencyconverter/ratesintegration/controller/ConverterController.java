@@ -9,7 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,27 +28,27 @@ import java.util.List;
 @Controller
 @Api(value = "Currency converter resource", description = "This is currency converting.")
 @RequestMapping("/convert")
+@Slf4j
 public class ConverterController {
 
-    @Autowired
+    private static final String CONVERT_RESULT = "convertResult";
+    private static final String PREVIOUS_CONVERSIONS = "previousConversions";
+
     private CurrencyConverterService currencyConverter;
-
-    @Autowired
     private PreviousConversionsStorageService previousConversionsStorageService;
-
-    @Autowired
     private CurrencyConverterValidationService validationService;
 
     @Autowired
-    private Logger logger;
+    public ConverterController(CurrencyConverterService currencyConverter, PreviousConversionsStorageService previousConversionsStorageService, CurrencyConverterValidationService validationService) {
+        this.currencyConverter = currencyConverter;
+        this.previousConversionsStorageService = previousConversionsStorageService;
+        this.validationService = validationService;
+    }
 
     @ModelAttribute("convert")
     public ConvertDTO convertDTO() {
         return new ConvertDTO();
     }
-
-    private static final String CONVERT_RESULT = "convertResult";
-    private static final String PREVIOUS_CONVERSIONS = "previousConversions";
 
     @GetMapping
     public String redirectToIndex() {
@@ -68,7 +68,7 @@ public class ConverterController {
 
         if (bindingResult.hasErrors() || validationService.validate(convertDTO, bindingResult)) {
             addPreviousConversionsToResponse(model);
-            logger.error("ConvertDTO Validation failed.");
+            log.error("ConvertDTO Validation failed.");
             return "index";
         }
 

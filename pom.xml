@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>currency-converter</name>
-    <description>Coding challenge for Zooplus AG</description>
+    <description>Currency converter application</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -53,6 +53,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

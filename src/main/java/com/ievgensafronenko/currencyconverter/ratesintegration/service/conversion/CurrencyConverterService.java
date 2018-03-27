@@ -5,7 +5,7 @@ import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
 import com.ievgensafronenko.currencyconverter.ratesintegration.entities.PreviousConversions;
 import com.ievgensafronenko.currencyconverter.ratesintegration.service.integration.RateService;
 import com.ievgensafronenko.currencyconverter.usermanagement.service.registration.UserService;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +18,23 @@ import java.util.Map;
  * Service for currency converting
  */
 @Service
+@Slf4j
 public class CurrencyConverterService {
 
-    @Autowired
+    private static final DateFormat FORMAT = new SimpleDateFormat("YYYY-MM-dd");
+
     private RateService rateService;
-
-    @Autowired
     private PreviousConversionsStorageService previousConversionsStorageService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private Logger logger;
-
-    private static final DateFormat FORMAT = new SimpleDateFormat("YYYY-MM-dd");
+    public CurrencyConverterService(RateService rateService,
+                                    PreviousConversionsStorageService previousConversionsStorageService,
+                                    UserService userService) {
+        this.rateService = rateService;
+        this.previousConversionsStorageService = previousConversionsStorageService;
+        this.userService = userService;
+    }
 
     /**
      * Method for currency converting.
@@ -42,7 +44,7 @@ public class CurrencyConverterService {
      */
     public Double convert(ConvertDTO convertDTO) {
 
-        logger.debug("Starting conversion for following data: {}", convertDTO);
+        log.debug("Starting conversion for following data: {}", convertDTO);
 
         String currencyFrom = convertDTO.getCurrencyFrom();
         String currencyTo = convertDTO.getCurrencyTo();
@@ -57,7 +59,7 @@ public class CurrencyConverterService {
 
         Double result = calculateResult(amount, rateFrom, rateTo);
 
-        logger.debug("Conversion result for {} / {} is {}", currencyFrom, currencyTo, result);
+        log.debug("Conversion result for {} / {} is {}", currencyFrom, currencyTo, result);
 
         String userEmail = userService.loggedUserEmail();
 

@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
         return new ApiInfo(
                 "Currency Converter REST API",
-                "Currency converter code challenge for Zooplus AG",
+                "Currency converter application",
                 "1.00",
                 "Terms of Service",
                 new Contact("Ievgen Safronenko", "https://www.linkedin.com/in/ievgen-safronenko-0ba21144/",

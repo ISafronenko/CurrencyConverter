@@ -1,10 +1,10 @@
 package com.ievgensafronenko.currencyconverter.usermanagement.service.registration;
 
+import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
 import com.ievgensafronenko.currencyconverter.usermanagement.entities.Role;
 import com.ievgensafronenko.currencyconverter.usermanagement.entities.User;
-import com.ievgensafronenko.currencyconverter.usermanagement.dto.UserRegistrationDto;
 import com.ievgensafronenko.currencyconverter.usermanagement.repository.UserRepository;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,10 +22,8 @@ import java.util.stream.Collectors;
  * Service for operations on User object.
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private Logger logger;
 
     @Autowired
     private UserRepository userRepository;
@@ -43,16 +41,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        logger.debug("Loading user by email: {}", email);
+        log.debug("Loading user by email: {}", email);
 
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            logger.error("Can't load user by email: {}", email);
+            log.error("Can't load user by email: {}", email);
             throw new UsernameNotFoundException("Invalid username or password.");
         }
 
-        logger.debug("User successfully loaded: {}", user);
+        log.debug("User successfully loaded: {}", user);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
@@ -77,7 +75,7 @@ public class UserServiceImpl implements UserService {
      */
     public User save(UserRegistrationDto userDTO) {
 
-        logger.debug("Saving user: {}", userDTO);
+        log.debug("Saving user: {}", userDTO);
 
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
@@ -92,7 +90,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         User savedUser = userRepository.save(user);
 
-        logger.debug("User successfully saved: {}", savedUser);
+        log.debug("User successfully saved: {}", savedUser);
 
         return savedUser;
     }
@@ -106,7 +104,7 @@ public class UserServiceImpl implements UserService {
             userEmail = user.getUsername();
         }
 
-        logger.error("Get user email of current user: ", userEmail);
+        log.error("Get user email of current user: ", userEmail);
 
         return userEmail;
     }

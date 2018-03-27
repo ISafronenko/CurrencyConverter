@@ -27,9 +27,6 @@ public class CurrencyConverterServiceTest {
     private CurrencyConverterService converterService;
 
     @Mock
-    private Logger logger;
-
-    @Mock
     private RateService rateService;
 
     @Mock

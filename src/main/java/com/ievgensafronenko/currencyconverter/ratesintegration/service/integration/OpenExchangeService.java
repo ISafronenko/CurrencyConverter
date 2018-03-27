@@ -1,7 +1,7 @@
 package com.ievgensafronenko.currencyconverter.ratesintegration.service.integration;
 
 import com.ievgensafronenko.currencyconverter.ratesintegration.dto.RateDTO;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -12,22 +12,23 @@ import org.springframework.web.client.RestTemplate;
  * Service for getting rates from openexchangerates.org
  */
 @Service
+@Slf4j
 public class OpenExchangeService implements RateService {
-
-    @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private Logger logger;
-
-    @Autowired
-    private Environment env;
 
     @Value("${rate.service.url}")
     private String latestRateUrl;
 
     @Value("${rate.service.url.historical}")
     private String historicalRateUrl;
+
+    private RestTemplate restTemplate;
+    private Environment env;
+
+    @Autowired
+    public OpenExchangeService(RestTemplate restTemplate, Environment env) {
+        this.restTemplate = restTemplate;
+        this.env = env;
+    }
 
     /**
      * Method for getting rates from rates exchange service.
@@ -36,11 +37,11 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public RateDTO getRates() {
-        logger.debug("Loading actual rates from openexchangerates.org");
+        log.debug("Loading actual rates from openexchangerates.org");
 
         String rateUrl = latestRateUrl + getKey();
         RateDTO rateDTO = requestRates(rateUrl);
-        logger.debug("Loaded rates from openexchangerates.org: \n {}");
+        log.debug("Loaded rates from openexchangerates.org: \n {}");
         return rateDTO;
     }
 
@@ -52,7 +53,7 @@ public class OpenExchangeService implements RateService {
      */
     @Override
     public RateDTO getRates(String date) {
-        String rateUrl = historicalRateUrl.replace("{}", date)+getKey();
+        String rateUrl = historicalRateUrl.replace("{}", date) + getKey();
         return requestRates(rateUrl);
     }
 
