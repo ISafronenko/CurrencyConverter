@@ -13,7 +13,6 @@ import java.util.Date;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = "id")
